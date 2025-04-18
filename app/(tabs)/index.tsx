@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { StatusBar } from 'expo-status-bar';
 import {
   View,
   TextInput,
@@ -11,11 +12,13 @@ import MapView, { Marker, Region } from "react-native-maps";
 import * as Location from "expo-location";
 import { Ionicons } from "@expo/vector-icons";
 import { LocationObjectCoords } from "expo-location";
+import { useRouter } from "expo-router"; 
 
 export default function MapaComBusca() {
   const [location, setLocation] = useState<LocationObjectCoords | null>(null);
   const [region, setRegion] = useState<Region | null>(null);
   const [search, setSearch] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -36,6 +39,7 @@ export default function MapaComBusca() {
 
       setLocation(loc.coords);
       setRegion(coords);
+      
     })();
   }, []);
 
@@ -58,14 +62,22 @@ export default function MapaComBusca() {
       </View>
 
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.footerButton}>
+        {/* Botão "Início" */}
+        <TouchableOpacity
+          style={styles.footerButton}
+          onPress={() => router.push("/inicio")}
+        >
           <Ionicons name="home" size={24} color="white" />
           <Text style={styles.footerText}>Início</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.footerButton}>
+
+        <TouchableOpacity
+        style={styles.footerButton}onPress={() => router.push("/perfil")}
+        >
           <Ionicons name="person" size={24} color="white" />
           <Text style={styles.footerText}>Perfil</Text>
         </TouchableOpacity>
+
         <TouchableOpacity style={styles.footerButton}>
           <Ionicons name="navigate" size={24} color="white" />
           <Text style={styles.footerText}>Localizar</Text>
@@ -105,12 +117,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     backgroundColor: "#4B0082",
-    paddingVertical: 12,
+    paddingVertical: 20, 
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
   footerButton: {
     alignItems: "center",
+    marginTop: -4, 
   },
   footerText: {
     color: "white",
@@ -118,3 +131,4 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 });
+
