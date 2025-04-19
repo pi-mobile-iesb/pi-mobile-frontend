@@ -21,17 +21,11 @@ export default function TabLayout() {
         tabBarStyle: {
           backgroundColor: 'black',
           borderTopWidth: 0,
+          display: 'none',  // Esta linha é importante para ocultar a barra de navegação
         },
-      }}>
-      {/* Tela Home */}
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-
+      }}
+    >
+      {/* Suas abas e telas vão aqui */}
     </Tabs>
   );
 }
