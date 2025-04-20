@@ -38,10 +38,13 @@ export default function Perfil() {
       </View>
 
       <View style={styles.options}>
-        <TouchableOpacity style={styles.optionButton}>
-          <Ionicons name="settings-outline" size={20} color="#4B0082" />
-          <Text style={styles.optionText}>Configurações</Text>
-        </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.optionButton}
+        onPress={() => router.push("/config-user")} // Redireciona para a tela de configurações
+      >
+        <Ionicons name="settings-outline" size={20} color="#4B0082" />
+        <Text style={styles.optionText}>Configurações</Text>
+      </TouchableOpacity>
 
         <TouchableOpacity style={styles.optionButton}>
           <Ionicons name="lock-closed-outline" size={20} color="#4B0082" />

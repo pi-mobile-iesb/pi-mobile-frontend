@@ -98,7 +98,7 @@ export default function Inicio() {
         </TouchableOpacity>
 
         {/* Rotas Favoritas */}
-        <TouchableOpacity style={styles.featureButton} onPress={() => router.push('/favoritas')}>
+        <TouchableOpacity style={styles.featureButton} onPress={() => router.push('/rotas-favoritas')}>
             <Ionicons name="heart-outline" size={24} color="#4B0082" />
             <Text style={styles.featureText}>Rotas Favoritas</Text>
         </TouchableOpacity>
