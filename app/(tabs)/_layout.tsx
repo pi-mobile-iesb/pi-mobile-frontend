@@ -21,7 +21,7 @@ export default function TabLayout() {
         tabBarStyle: {
           backgroundColor: 'black',
           borderTopWidth: 0,
-          display: 'none',  // Esta linha é importante para ocultar a barra de navegação
+          display: 'none',  // essa linha é importante para ocultar a barra de navegação
         },
       }}
     >

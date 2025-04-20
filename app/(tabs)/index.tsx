@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import {
   View,
@@ -19,6 +19,7 @@ export default function MapaComBusca() {
   const [region, setRegion] = useState<Region | null>(null);
   const [search, setSearch] = useState("");
   const router = useRouter();
+  const mapRef = useRef<MapView | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -39,14 +40,31 @@ export default function MapaComBusca() {
 
       setLocation(loc.coords);
       setRegion(coords);
-      
     })();
   }, []);
+
+  const handleLocalizar = async () => {
+    let loc = await Location.getCurrentPositionAsync({});
+    const coords: Region = {
+      latitude: loc.coords.latitude,
+      longitude: loc.coords.longitude,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01,
+    };
+    setRegion(coords);
+    setLocation(loc.coords);
+    mapRef.current?.animateToRegion(coords, 1000); // anima em 1 segundo
+  };
 
   return (
     <View style={styles.container}>
       {region && (
-        <MapView style={StyleSheet.absoluteFillObject} region={region}>
+        <MapView
+          ref={mapRef}
+          style={StyleSheet.absoluteFillObject}
+          region={region}
+          showsUserLocation
+        >
           <Marker coordinate={region} title="Você está aqui" />
         </MapView>
       )}
@@ -71,14 +89,17 @@ export default function MapaComBusca() {
           <Text style={styles.footerText}>Início</Text>
         </TouchableOpacity>
 
+        {/* Botão Perfil */}
         <TouchableOpacity
-        style={styles.footerButton}onPress={() => router.push("/perfil")}
+          style={styles.footerButton}
+          onPress={() => router.push("/perfil")}
         >
           <Ionicons name="person" size={24} color="white" />
           <Text style={styles.footerText}>Perfil</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.footerButton}>
+        {/* Botão Localizar (agora funcionando!) */}
+        <TouchableOpacity style={styles.footerButton} onPress={handleLocalizar}>
           <Ionicons name="navigate" size={24} color="white" />
           <Text style={styles.footerText}>Localizar</Text>
         </TouchableOpacity>
@@ -131,4 +152,3 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 });
-
